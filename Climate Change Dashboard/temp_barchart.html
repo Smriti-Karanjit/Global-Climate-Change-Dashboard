@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Record Number of Days Above 1.5°C</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      max-width: 1200px;
+      min-width: 400px;
+      min-height: 300px;
+      display: block;
+      margin: auto;
+      background-color: black;
+    }
+
+    .axis path, .axis line { stroke: white; }
+    .axis text { fill: white; }
+    .title, .legend text, .annotation { fill: white; }
+  </style>
+</head>
+<body>
+  <svg></svg>
+
+  <script>
+    const svg = d3.select("svg");
+    const margin = { top: 50, right: 30, bottom: 70, left: 60 };
+    const minWidth = 400, minHeight = 300;
+
+    function render() {
+      const containerWidth = Math.max(svg.node().clientWidth, minWidth);
+      const containerHeight = Math.max(window.innerHeight * 0.7, minHeight);
+      const width = containerWidth - margin.left - margin.right;
+      const height = containerHeight - margin.top - margin.bottom;
+
+      svg.attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`);
+      svg.selectAll("*").remove();
+
+      const chart = svg.append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+      d3.csv("daily_global_temperature_increase_above_preindustrial_2023 (3).csv")
+        .then(data => {
+          data.forEach(d => {
+            d.year = +d.year;
+            d["1 to 1.25"] = +d["1 to 1.25"];
+            d["1.25 to 1.5"] = +d["1.25 to 1.5"];
+            d["Over 1.5"] = +d["Over 1.5"];
+            d.total = d["1 to 1.25"] + d["1.25 to 1.5"] + d["Over 1.5"];
+          });
+          
+          data = data.filter(d => d.year >= 1995);
+
+          const keys = ["1 to 1.25", "1.25 to 1.5", "Over 1.5"];
+          const stack = d3.stack().keys(keys);
+          const series = stack(data);
+
+          const x = d3.scaleBand()
+            .domain(data.map(d => d.year))
+            .range([0, width])
+            .padding(0.2);
+
+          const y = d3.scaleLinear()
+            .domain([0, d3.max(series, s => d3.max(s, d => d[1]))])
+            .nice()
+            .range([height, 0]);
+
+          const colors = { "1 to 1.25": "#FFC4A3", "1.25 to 1.5": "#FF7F50", "Over 1.5": "#B22222" };
+
+          chart.selectAll(".layer")
+            .data(series)
+            .enter().append("g")
+            .attr("fill", d => colors[d.key])
+            .selectAll("rect")
+            .data(d => d)
+            .enter().append("rect")
+            .attr("x", d => x(d.data.year))
+            .attr("y", d => y(d[1]))
+            .attr("height", d => y(d[0]) - y(d[1]))
+            .attr("width", x.bandwidth());
+
+          chart.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).tickFormat(d3.format("d")))
+            .selectAll("text")
+            .attr("transform", "rotate(45)")
+            .style("text-anchor", "start")
+            .attr("fill", "white");
+
+          chart.append("g")
+            .call(d3.axisLeft(y))
+            .selectAll("text").attr("fill", "white");
+
+          chart.append("text")
+            .attr("x", width / 2)
+            .attr("y", -20)
+            .attr("text-anchor", "middle")
+            .attr("class", "title")
+            .style("font-size", "18px")
+            .style("font-weight", "bold")
+            .text("RECORD NUMBER OF DAYS ABOVE 1.5°C OVER THE YEARS");
+
+          const dashedLineY = y(365);
+          chart.append("line")
+            .attr("x1", 0).attr("y1", dashedLineY)
+            .attr("x2", width).attr("y2", dashedLineY)
+            .attr("stroke", "white")
+            .attr("stroke-dasharray", "5,5")
+            .attr("stroke-width", 2);
+
+          chart.append("text")
+            .attr("x", width - 10)
+            .attr("y", dashedLineY - 5)
+            .attr("text-anchor", "end")
+            .style("font-size", "12px")
+            .text("365 Days");
+
+          const legend = chart.append("g")
+            .attr("transform", `translate(${width / 2 - 120}, ${height + 40})`);
+
+          keys.forEach((key, i) => {
+            legend.append("rect")
+              .attr("x", i * 120)
+              .attr("y", 0)
+              .attr("width", 15)
+              .attr("height", 15)
+              .attr("fill", colors[key]);
+            legend.append("text")
+              .attr("x", i * 120 + 20)
+              .attr("y", 12)
+              .attr("fill", "white") 
+              .style("font-size", "12px")
+              .text(key + " °C");
+          });
+        });
+    }
+
+    render();
+    window.addEventListener("resize", render);
+  </script>
+</body>
+</html>
