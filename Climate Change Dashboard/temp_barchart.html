@@ -54,7 +54,7 @@
     const keys = Object.keys(colors);
 
     // Load and draw chart
-    d3.csv("daily_global_temperature_increase_above_preindustrial_2023 (3).csv").then(data => {
+    d3.csv("https://raw.githubusercontent.com/Smriti-Karanjit/Global-Climate-Change-Dashboard/refs/heads/main/Climate%20Change%20Dashboard/data/daily_global_temperature_increase_above_preindustrial_2023%20(3).csv").then(data => {
       data.forEach(d => {
         d.year = +d.year;
         d["1 to 1.25"] = +d["1 to 1.25"];
