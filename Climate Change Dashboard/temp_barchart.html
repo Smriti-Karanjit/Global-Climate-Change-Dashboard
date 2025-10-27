@@ -50,7 +50,7 @@
       const chart = svg.append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      d3.csv("daily_global_temperature_increase_above_preindustrial_2023 (3).csv")
+      d3.csv("https://github.com/Smriti-Karanjit/Global-Climate-Change-Dashboard/blob/b3470a79bf3216e889071dd279b8d3fafb0471a6/Climate%20Change%20Dashboard/data/daily_global_temperature_increase_above_preindustrial_2023%20(3).csv")
         .then(data => {
           data.forEach(d => {
             d.year = +d.year;
