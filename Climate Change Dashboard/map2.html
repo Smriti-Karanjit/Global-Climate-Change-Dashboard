@@ -118,8 +118,8 @@
     };
 
     Promise.all([
-      d3.json("custom.geo.json"),
-      d3.csv("annual-temperature-anomalies.csv", (d) => ({
+      d3.json("https://raw.githubusercontent.com/Smriti-Karanjit/Global-Climate-Change-Dashboard/refs/heads/main/Climate%20Change%20Dashboard/json/custom.geo.json"),
+      d3.csv("https://raw.githubusercontent.com/Smriti-Karanjit/Global-Climate-Change-Dashboard/refs/heads/main/Climate%20Change%20Dashboard/data/annual-temperature-anomalies.csv", (d) => ({
         Entity: d.Entity,
         Year: +d.Year,
         Anomaly: +d["Temperature anomaly"],
