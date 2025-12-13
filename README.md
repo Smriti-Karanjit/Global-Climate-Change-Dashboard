@@ -129,27 +129,20 @@ Data Sources
 (Power BI integration is still in progress — below are completed D3.js visuals and preliminary dashboard views.)
 <br>
 
-Temperature Anomaly Line Chart
+Temperature Visualizations
 
-(Insert screenshot here)
+<img src="Climate Change Dashboard/assets/screenshots/Screenshot 2024-11-18 153514.png" width="600">
+<br><br>
+
+<img src="Climate Change Dashboard/assets/screenshots/Screenshot 2024-11-18 212056.png" width="600">
 <br><br>
 
 Global Choropleth Map (Temperature Change)
-
-(Insert screenshot here)
+<img src="Climate Change Dashboard/assets/screenshots/Screenshot 2024-11-18 153514.png" width="600">
 <br><br>
 
 Sea Ice Concentration Visualization
 
-(Insert screenshot here)
+<img src="Climate Change Dashboard/assets/screenshots/Screenshot 2024-11-19 105817.png width="600">
 <br><br>
 
-CO₂ Emissions Over Time
-
-(Insert screenshot here)
-<br><br>
-
-Sea Level Rise Chart
-
-(Insert screenshot here)
-<br><br>
