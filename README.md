@@ -138,11 +138,17 @@ Temperature Visualizations
 <br><br>
 
 Global Choropleth Map (Temperature Change)
+
 <img src="Climate Change Dashboard/assets/screenshots/Screenshot 2024-11-18 153514.png" width="600">
 <br><br>
 
 Sea Ice Concentration Visualization
 
-<img src="Climate Change Dashboard/assets/screenshots/Screenshot 2024-11-19 105817.png width="600">
+<img src="Climate Change Dashboard/assets/screenshots/Screenshot 2024-11-19 105817.png" width="600">
+<br><br>
+
+## Project Poster
+
+<img src="Climate Change Dashboard/assets/screenshots/Global Climate Change Poster (36 x 24 in).jpg" width="1000">
 <br><br>
 
